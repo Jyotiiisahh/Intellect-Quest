@@ -1,0 +1,341 @@
+<html>
+    <?php
+$con = mysqli_connect('localhost','root','Jyotisah@123','tech');
+$q = "select * from exam";
+$rs = mysqli_query($con , $q);
+$qu=array();
+$op1=array();
+$op2=array();
+$op3=array();
+$op4=array();
+$ans=array();
+$hint1=array();
+$hint2=array();
+
+while($row = mysqli_fetch_array($rs))
+{ 
+    $qu[]=$row['question'];
+    $op1[]=$row['op1'];
+    $op2[]=$row['op2'];
+    $op3[]=$row['op3'];
+    $op4[]=$row['op4'];
+    $ans[]=$row['ans'];
+    $hint1[]=$row['hint1'];
+    $hint2[]=$row['hint2'];
+    
+    
+
+}
+
+
+
+?>
+    <script>
+        var rans,index=0;
+        //var a=["1) Which of the following option leads to the portability and security of Java?","2).Which of the following is not a Java features?","3). What is used to find and fix bugs in the Java programs.",
+                 //"4). What is the return type of the hashCode() method in the Object class?","5. In which process, a local variable has the same name as one of the instance variables?"];
+        //var op1=[" The applet makes the Java code secure and portable","Dynamic","JVM","Object", "Serialization"];
+        //var op2=["Bytecode is executed by JVM","Architecture Neutral","JRE","int","Variable Shadowing"];
+        //var op3=["Use of exception handling","Use of pointers","JDK","long","Abstraction"];
+        //var op4=["Dynamic binding between objects","Object-oriented","JDB","void","Multi-threading"];
+        //var hint1=[1,3,2,2,1];
+        //var hint2=[2,4,4,3,2];
+        var a=<?php  echo json_encode($qu); ?>;
+        var op1=<?php  echo json_encode($op1); ?>;
+        var op2=<?php  echo json_encode($op2); ?>;
+        var op3=<?php  echo json_encode($op3); ?>;
+        var op4=<?php  echo json_encode($op4); ?>;
+        var hint1=<?php  echo json_encode($hint1); ?>;
+        var hint2=<?php  echo json_encode($hint2); ?>;
+        var ans=<?php  echo json_encode($ans); ?>;
+        
+        //var ans=[2,3,4,2,2];
+        var c=[0,0,0,0,0];
+
+function hintdetail()
+{
+  if(hint1[index]==1 || hint2[index]==1)
+  {
+    document.getElementById("h1").style.color="  #4040a1"; 
+
+  }
+   if(hint1[index]==2 || hint2[index]==2)
+  {
+    document.getElementById("h2").style.color="  #4040a1"; 
+
+  }
+   if(hint1[index]==3 || hint2[index]==3)
+  {
+    document.getElementById("h3").style.color="  #4040a1"; 
+
+  }
+  if(hint1[index]==4 || hint2[index]==4)
+  {
+    document.getElementById("h4").style.color="  #4040a1"; 
+  }
+  
+
+}
+
+        function show(v)
+        {                              
+          index=v;
+            // var s=12;
+            // var n=setInterval(function(){
+    
+            //   document.getElementById("x").innerHTML="Time: left "+" second: "+ s;
+            //   s--;
+                
+            //    if(s == -1)
+            //   {
+            //    next();
+                  
+            //     if(index==4)  clearInterval(n);
+            // }
+            //   },1000
+            //   );
+
+              rans = ans[v];
+              document.getElementById("a").innerHTML= ""+a[v];
+              document.getElementById("op1").innerHTML= "<input type='radio' name='x' value='1' id='a'><span id='h1'>"+op1[v]+"</span>";
+              document.getElementById("op2").innerHTML= "<input type='radio' name='x' value='2' id='b'><span id='h2'>"+op2[v]+"</span>";
+              document.getElementById("op3").innerHTML= "<input type='radio' name='x' value='3' id='c'><span id='h3'>"+op3[v]+"</span>";
+              document.getElementById("op4").innerHTML= "<input type='radio' name='x' value='4' id='d'><span id='h4'>"+op4[v]+"</span>";
+            
+            }
+            function next()
+      {
+         if(index != 4)
+         {
+          
+            show(index+1);
+         }
+        
+       }
+      
+      
+      
+      
+      function Previous(){
+      
+        if(index == 0)
+        {
+          index = 4;
+          show(index);
+        }
+        else{
+        
+            show(index-1);
+        }
+      }
+      function submit()
+      {
+         var p;
+          if(document.getElementById("a").checked)
+          {
+            p = document.getElementById("a").value;
+          }
+          if(document.getElementById("b").checked)
+          {
+            p = document.getElementById("b").value;
+          }
+          if(document.getElementById("c").checked)
+          {
+            p = document.getElementById("c").value;
+          }
+          if(document.getElementById("d").checked)
+          {
+            p = document.getElementById("d").value;
+          }
+
+          if( p==rans)
+          {
+            c[index]=1;
+          }
+        else{
+           c[index]=0;
+        }
+           document.getElementById("ans").innerHTML="Answer Submitted";
+           
+      }
+          
+      function finish()
+      {
+          var s=0;
+          
+          for(i=0;i<c.length;i++)
+          {
+           s=s+c[i];
+          }
+        document.getElementById("ans").innerHTML= s+"/5";
+      }
+     
+
+     
+            </script>
+            <style>
+                .a
+                {
+                    width: 100%;
+                    height: 400px;
+
+                }
+                .b
+                {
+                    font-size: 25px;
+                    color: black;
+                    margin-left: 80px;
+                }
+                    
+
+                .div2
+                {
+                   width: 60%;
+                   height: 380px;
+                   background-image: linear-gradient(#80ced6, #d5f4e6, #b1cbbb);
+                   float: left;
+
+
+                }
+                .div3
+                {
+                   width: 20%;
+                   height: 380px;
+                   background-image: linear-gradient(#80ced6, #d5f4e6, #b1cbbb);
+                   float: left;
+
+                }
+                .div4
+                {
+                    width: 20%;
+                    height: 380px;
+                    background-image: linear-gradient(#80ced6, #d5f4e6, #b1cbbb);
+                    float: left;
+                }
+                .button
+                {
+                    width: 60%;
+                    height: 40px;
+                    background-image: linear-gradient(to right,   #3b3a30 ,   #3e4444);
+                    padding: 10px;
+                    margin-left: 30%;
+                    margin-top: 5px;
+                    border-radius: 10px;
+      
+                }
+                .a1
+                {
+                    color: rgb(8, 8, 9);
+                    font-size: 20px;
+                    margin-left: 30px;
+                    margin-top: 60px;
+                }
+                .a1:hover {
+                    background-color: 	#FFC0CB;
+                   }
+                
+                .a2
+                {
+                    color: rgb(0, 0, 0);
+                    font-size: 20px;
+                    margin-left: 30px;
+                    
+                }
+                .a3
+                {
+                    color: rgb(0, 0, 0);
+                    font-size: 20px;
+                    margin-left: 30px;
+                    
+                }
+                .a4
+                {
+                    color: rgb(0, 0, 0);
+                    font-size: 20px;
+                    margin-left: 30px;
+                    
+                }
+                .a4:hover {
+                    background-color: #DC143C;
+                   }
+                .a2:hover {
+                    background-color: yellow;
+                   }
+                .a3:hover {
+                    background-color: green;
+                   }
+                .submit
+                {
+                    width: 60%;
+                    height: 40px;
+                    background-image: linear-gradient(to right,  #36486b ,  #f4e1d2);
+                    padding: 10px;
+                    border-radius: 10px;
+                    margin-top: 5px;
+                    margin-left: 30px;
+                }
+                .next
+                {
+                    width: 60%;
+                    height: 40px;
+                    background-image: linear-gradient(to right,   #36486b ,  #f4e1d2);
+                    padding: 10px;
+                    border-radius: 10px;
+                    margin-top: 100px;
+                    margin-left: 30px;
+
+                }
+
+                .button:hover { background-color: #606060;
+                }
+                .button:hover {opacity: 0.6}
+                
+                .next:hover { background-color: #606060;
+                }
+                .next:hover {opacity: 0.6}
+
+                .submit:hover { background-color: #606060;
+                }
+                .submit:hover {opacity: 0.6}
+  
+
+
+            </style>
+            
+            
+            
+            
+            
+            
+            
+            <body>
+              
+                <div class="a"><img src="imgqu.jpg" class="a"></div>
+                <div class="div2">
+                    <p id="a"    class="a1"></p> 
+                    <p id="op1"  class="a4"></p>
+                    <p id="op2"  class="a2"></p>
+                    <p id="op3"  class="a2"></p>
+                    <p id="op4"  class="a3"></p>
+                    <p id="ans"  class="a2"></p>
+                    <p id="hint"></p>
+
+        
+                </div>
+                <div class="div3">
+                <p class="b" id="x"></p>
+                <input type="button" class="button" style="color:white"value="👉1st Quiz Question" onclick="show(0)"><br>
+                <input type="button" class="button" style="color:white" value="👉2nd Quiz Question" onclick="show(1)"><br>
+                <input type="button" class="button" style="color:white" value="👉3rd Quiz Question" onclick="show(2)"><br>
+                <input type="button" class="button" style="color:white" value="👉4th Quiz Question" onclick="show(3)"><br>
+                <input type="button" class="button" style="color:white" value="👉5th Quiz Question" onclick="show(4)"><br><br><br>
+               </div>
+               <div class="div4">
+                <input type="button" class="next"  style="color:black" value="⏭️next" onclick="next()">&nbsp;
+                <input type="button" class="submit"  style="color:black" value="Previous⏮️" onclick="Previous()">&nbsp;
+                <input type="button" class="submit"  style="color:black" value="🎉submit" onclick="submit()">&nbsp;
+                <input type="button" class="submit"  style="color:black" value="Finish⏳" onclick="finish()">
+                <input type="button" class="submit"  style="color:black" value="Hint" onclick="hintdetail()">
+            </div>
+             </body>
+              </html>
